@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brook Bot | The Soul King of Discord</title>
+    <meta name="description" content="Invite Tracker, VoiceMaster, and Fun commands for your Discord server. Yohohoho!">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0f0f13;
+            --card-bg: #1a1a20;
+            --text-color: #e0e0e0;
+            --accent-color: #00ffd5; /* Soul King Teal */
+            --secondary-color: #9b59b6; /* Purple */
+            --gradient: linear-gradient(135deg, #00ffd5 0%, #9b59b6 100%);
+            --code-bg: #2a2a35;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .music-notes {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* --- HEADER / HERO SECTION --- */
+        header {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            z-index: 1;
+            background: radial-gradient(circle at center, rgba(155, 89, 182, 0.15) 0%, rgba(15, 15, 19, 1) 70%);
+        }
+
+        .hero-img-container {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            padding: 5px;
+            background: var(--gradient);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 30px rgba(0, 255, 213, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #000;
+            border: 4px solid var(--bg-color);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: #000;
+            box-shadow: 0 5px 15px rgba(0, 255, 213, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 213, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        /* --- SECTIONS COMMON --- */
+        section {
+            position: relative;
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 1;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #fff;
+        }
+        
+        .section-title span {
+            color: var(--accent-color);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .card p {
+            color: #bbb;
+            font-size: 0.95rem;
+        }
+
+        /* --- COMMANDS SECTION SPECIFIC --- */
+        .command-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .command-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .cmd {
+            background: var(--code-bg);
+            color: var(--accent-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            border: 1px solid rgba(0, 255, 213, 0.2);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #0a0a0d;
+            color: #666;
+            position: relative;
+            z-index: 1;
+            margin-top: 5rem;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .grid { grid-template-columns: 1fr; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="music-notes"></div>
+
+    <!-- Hero Section -->
+    <header>
+        <div class="hero-img-container">
+            <!-- Make sure brook.jpg is in the same folder! -->
+            <img src="brook.jpg" alt="Brook Bot Logo" class="hero-img">
+        </div>
+        
+        <h1>Brook</h1>
+        <p class="tagline">The ultimate Invite Tracker & VoiceMaster bot with a soul! <br> Manage your server with premium features and have fun. Yohohoho!</p>
+
+        <div class="btn-group">
+            <a href="https://discord.com/oauth2/authorize?client_id=1441095933394681937&permissions=286641264&integration_type=0&scope=bot+applications.commands" target="_blank" class="btn btn-primary">
+                <i class="fa-brands fa-discord"></i> Invite Brook
+            </a>
+            <a href="https://discord.gg/BfEVed2k5Q" target="_blank" class="btn btn-secondary">
+                <i class="fa-solid fa-life-ring"></i> Support Server
+            </a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">Why Add <span>Brook?</span></h2>
+        
+        <div class="grid">
+            <!-- Feature 1 -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-user-plus"></i></div>
+                <h3>Advanced Invite Tracking</h3>
+                <p>Keep track of who is growing your community! Features include leaderboards, invite logs, join/leave messages, and fake invite detection.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-microphone-lines"></i></div>
+                <h3>VoiceMaster System</h3>
+                <p>Give your members control! Just like premium bots, users can create temporary voice channels (Join to Create) and manage their own permissions.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-music"></i></div>
+                <h3>Fun & Interaction</h3>
+                <p>Engage your chat with anime-themed commands, fun interactions, and Soul King energy. A perfect mix of utility and entertainment.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands Section -->
+    <section class="commands">
+        <h2 class="section-title">Soul King's <span>Setlist</span></h2>
+        
+        <div class="grid">
+            <!-- Category 1: Captain's Orders (Admin) -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-anchor"></i></div>
+                <h3>Captain's Orders (Admin)</h3>
+                <ul class="command-list">
+                    <li><span class="cmd">b!setprefix</span> Change prefix</li>
+                    <li><span class="cmd">b!setup</span> Setup Invite/Voice</li>
+                    <li><span class="cmd">b!setwelcome</span> Customize Welcome</li>
+                    <li><span class="cmd">b!autopingset</span> Set auto pings</li>
+                    <li><span class="cmd">b!autopingstop</span> Stop auto pings</li>
+                </ul>
+            </div>
+
+            <!-- Category 2: Shipwright Tools (Utility) -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-wrench"></i></div>
+                <h3>Shipwright Tools (Utility)</h3>
+                <ul class="command-list">
+                    <li><span class="cmd">b!userinfo</span> User Dossier</li>
+                    <li><span class="cmd">b!serverinfo</span> Log Pose Info</li>
+                    <li><span class="cmd">b!poll</span> Create Vote</li>
+                    <li><span class="cmd">b!ping</span> Sound Check</li>
+                    <li><span class="cmd">b!av</span> View User Avatar</li>
+                </ul>
+            </div>
+
+            <!-- Category 3: Party Time (Fun) -->
+            <div class="card">
+                <div class="card-icon"><i class="fa-solid fa-icons"></i></div>
+                <h3>Party Time (Fun)</h3>
+                <ul class="command-list">
+                    <li><span class="cmd">b!dice</span> Roll Dice</li>
+                    <li><span class="cmd">b!8ball</span> Magic Ball</li>
+                    <li><span class="cmd">b!coinflip</span> Heads/Tails</li>
+                    <li><span class="cmd">b!ship</span> Love Calc</li>
+                    <li><span class="cmd">b!joke</span> Skull Joke</li>
+                    <li><span class="cmd">b!waifu</span> Random Waifu</li>
+                    <li><span class="cmd">b!invites</span> Bounty Check</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Brook Bot. All rights reserved. <br> Made with 💀 and 🎵.</p>
+    </footer>
+
+</body>
+</html>
